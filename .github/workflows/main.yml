@@ -22,3 +22,6 @@ jobs:
     - name: Run tests
       working-directory: ./actix_web_2023
       run: cargo test --verbose
+
+    - name: Merge pull requests (automerge-action)
+      uses: pascalgn/automerge-action@v0.15.5
