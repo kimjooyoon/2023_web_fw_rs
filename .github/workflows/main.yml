@@ -19,9 +19,11 @@ jobs:
     - name: Build
       working-directory: ./actix_web_2023
       run: cargo build --verbose
-    - name: Build
-      working-directory: ./actix_web_2023
-      run: cargo build --verbose
     - name: Run tests
       working-directory: ./actix_web_2023
       run: cargo test --verbose
+
+    - name: Merge pull requests (automerge-action)
+      uses: pascalgn/automerge-action@v0.15.5
+      env:
+        GITHUB_TOKEN: "${{ secrets.REPO_TOKEN }}"
