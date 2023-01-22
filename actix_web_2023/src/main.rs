@@ -2,7 +2,7 @@ use actix_web::{App, HttpRequest, HttpServer, middleware, web};
 
 async fn index(req: HttpRequest) -> &'static str {
     println!("REQ: {req:?}");
-    "Hello world!"
+    "hi teddy!"
 }
 
 #[actix_web::main]
@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             // enable logger
             .wrap(middleware::Logger::default())
-            .service(web::resource("/index.html").to(|| async { "Hello world!" }))
+            .service(web::resource("/index.html").to(|| async { "hi teddy!" }))
             .service(web::resource("/").to(index))
     })
         .bind(("127.0.0.1", 8080))?
@@ -38,7 +38,7 @@ mod tests {
         assert_eq!(resp.status(), http::StatusCode::OK);
 
         let response_body = resp.into_body();
-        assert_eq!(to_bytes(response_body).await?, r##"Hello world!"##);
+        assert_eq!(to_bytes(response_body).await?, r##"hi teddy!"##);
 
         Ok(())
     }
