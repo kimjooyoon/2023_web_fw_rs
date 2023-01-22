@@ -19,9 +19,6 @@ jobs:
     - name: Build
       working-directory: ./actix_web_2023
       run: cargo build --verbose
-    - name: Build
-      working-directory: ./actix_web_2023
-      run: cargo build --verbose
     - name: Run tests
       working-directory: ./actix_web_2023
       run: cargo test --verbose
