@@ -22,13 +22,6 @@ jobs:
         path: '**/target'
         key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: test .. ls
-      run: ls -lia
-
-    - name: test .. ls actix_web_2023
-      working-directory: ./actix_web_2023
-      run: ls -lia
-
     - name: Build
       if: steps.cache.outputs.cache-hit != 'true'
       working-directory: ./actix_web_2023
