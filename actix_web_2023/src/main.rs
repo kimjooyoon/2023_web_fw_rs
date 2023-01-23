@@ -1,8 +1,14 @@
-use actix_web::{App, HttpRequest, HttpServer, middleware, web};
+use actix_web::{App, get, HttpRequest, HttpServer, middleware, Responder, web};
 
-async fn index(req: HttpRequest) -> &'static str {
+#[get("/")]
+async fn index(req: HttpRequest) -> impl Responder {
     println!("REQ: {req:?}");
     "hi teddy!"
+}
+
+#[get("/{name}")]
+async fn name(name: web::Path<String>) -> impl Responder {
+    format!("Hello {}!", &name)
 }
 
 #[actix_web::main]
@@ -14,7 +20,8 @@ async fn main() -> std::io::Result<()> {
             // enable logger
             .wrap(middleware::Logger::default())
             .service(web::resource("/index.html").to(|| async { "hi teddy!" }))
-            .service(web::resource("/").to(index))
+            .service(name)
+            .service(index)
     })
         .bind(("127.0.0.1", 8080))?
         .run()
