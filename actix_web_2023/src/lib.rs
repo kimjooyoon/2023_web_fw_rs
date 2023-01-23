@@ -1,39 +1,12 @@
-use actix_web::{App, get, HttpRequest, HttpServer, middleware, Responder, web};
-
-#[get("/")]
-async fn index(req: HttpRequest) -> impl Responder {
-    println!("REQ: {req:?}");
-    "hi teddy!"
-}
-
-#[get("/{name}")]
-async fn name(name: web::Path<String>) -> impl Responder {
-    format!("Hello {}!", &name)
-}
-
-pub async fn app_run() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "actix_web=info");
-
-    HttpServer::new(|| {
-        App::new()
-            .wrap(middleware::Logger::default())
-            .service(web::resource("/index.html").to(|| async { "hi teddy!" }))
-            .service(name)
-            .service(index)
-    })
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
-}
-
+pub mod router;
+mod handler;
 
 #[cfg(test)]
 mod tests {
     use actix_http::body::BoxBody;
     use actix_web::{body::to_bytes, dev::Service, http, test, App, Error};
     use actix_web::dev::ServiceResponse;
-
-    use super::*;
+    use crate::handler::{index, name};
 
     #[actix_web::test]
     async fn test_index() -> Result<(), Error> {
