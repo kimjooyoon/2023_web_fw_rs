@@ -187,6 +187,7 @@ dependencies = [
 name = "actix_web_2023"
 version = "0.1.0"
 dependencies = [
+ "actix-http",
  "actix-web",
 ]
 
